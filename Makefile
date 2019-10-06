@@ -1,11 +1,13 @@
+.PHONY: test
+
 init: install
 
 install: npm-install typings-install
-compile: gulp tsc
+compile: gulp
 test:
 	npm test
 
-gulp: gulp-compile
+gulp: gulp-default
 tsc: tsc-compile
 
 npm-install:
@@ -14,9 +16,14 @@ npm-install:
 typings-install:
 	npx typings install
 
-gulp-compile:
+gulp-default:
 	npx gulp
+
+gulp-minify:
+	npx gulp minify
+
+gulp-compile:
+	npx gulp compile
 
 tsc-compile:
 	npx tsc
-	mv ts/*.js ts/*.js.map js

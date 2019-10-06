@@ -1,4 +1,4 @@
-/// <reference path="../ts/lorem.d.ts" />
+/// <reference path="../ts/types.d.ts" />
 
 /**
  * Customised utility types.

@@ -1,4 +1,4 @@
-/// <reference path="../ts/lorem.d.ts" />
+/// <reference path="../ts/random.d.ts" />
 
 /**
  * JavaScript port of some useful functions from Python's

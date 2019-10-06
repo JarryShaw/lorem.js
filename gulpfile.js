@@ -13,7 +13,24 @@ const uglify = require('gulp-uglify');
 const sourcemaps = require('gulp-sourcemaps');
 const buffer = require('vinyl-buffer');
 
-function compile() {
+gulp.task('compile', function compile() {
+    return browserify({
+        basedir: '.',
+        debug: true,
+        entries: [path.join('ts', 'lorem.ts')],
+        cache: {},
+        packageCache: {}
+    })
+        .plugin(tsify)
+        .bundle()
+        .pipe(source('lorem.js'))
+        .pipe(buffer())
+        .pipe(sourcemaps.init({ loadMaps: true }))
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest(path.join('js')));
+});
+
+gulp.task('minify', function compile() {
     return browserify({
         basedir: '.',
         debug: true,
@@ -29,7 +46,6 @@ function compile() {
         .pipe(uglify())
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(path.join('js')));
-}
+});
 
-gulp.task('tsc', compile);
-gulp.task('default', compile);
+gulp.task('default', gulp.parallel(['compile', 'minify']));

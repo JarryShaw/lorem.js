@@ -1,3 +1,55 @@
+(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+exports.endianness = function () { return 'LE' };
+
+exports.hostname = function () {
+    if (typeof location !== 'undefined') {
+        return location.hostname
+    }
+    else return '';
+};
+
+exports.loadavg = function () { return [] };
+
+exports.uptime = function () { return 0 };
+
+exports.freemem = function () {
+    return Number.MAX_VALUE;
+};
+
+exports.totalmem = function () {
+    return Number.MAX_VALUE;
+};
+
+exports.cpus = function () { return [] };
+
+exports.type = function () { return 'Browser' };
+
+exports.release = function () {
+    if (typeof navigator !== 'undefined') {
+        return navigator.appVersion;
+    }
+    return '';
+};
+
+exports.networkInterfaces
+= exports.getNetworkInterfaces
+= function () { return {} };
+
+exports.arch = function () { return 'javascript' };
+
+exports.platform = function () { return 'browser' };
+
+exports.tmpdir = exports.tmpDir = function () {
+    return '/tmp';
+};
+
+exports.EOL = '\n';
+
+exports.homedir = function () {
+	return '/'
+};
+
+},{}],2:[function(require,module,exports){
 'use strict';
 var __spreadArrays = (this && this.__spreadArrays) || function () {
     for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
@@ -140,4 +192,64 @@ function set_pool(pool) {
     _TEXT = pool;
 }
 exports.set_pool = set_pool;
+
+},{"./random":3,"./types":4,"os":1}],3:[function(require,module,exports){
+'use strict';
+Object.defineProperty(exports, "__esModule", { value: true });
+function shuffle(x) {
+    var temp;
+    var j;
+    for (var i = x.length - 1; i > 0; i--) {
+        j = Math.floor((Math.random() * (i + 1)));
+        temp = x[i];
+        x[i] = x[j];
+        x[j] = temp;
+    }
+}
+exports.shuffle = shuffle;
+function randint(a, b) {
+    return Math.floor(Math.random() * (b - a)) + a;
+}
+exports.randint = randint;
+function choice(seq) {
+    var i = Math.floor((Math.random() * seq.length));
+    return seq[i];
+}
+exports.choice = choice;
+
+},{}],4:[function(require,module,exports){
+'use strict';
+Object.defineProperty(exports, "__esModule", { value: true });
+var random = require("./random");
+function capitalize(s) {
+    return s.charAt(0).toUpperCase() + s.slice(1);
+}
+String.prototype.capitalize = function () {
+    return capitalize(this.toString());
+};
+var InfiniteIterator = (function () {
+    function InfiniteIterator(items) {
+        this.items = items;
+        this.pointer = 0;
+        this.length = items.length;
+    }
+    InfiniteIterator.prototype.next = function () {
+        if (this.pointer >= this.length) {
+            this.pointer = 0;
+            random.shuffle(this.items);
+        }
+        return {
+            done: false,
+            value: this.items[this.pointer++]
+        };
+    };
+    InfiniteIterator.prototype[Symbol.iterator] = function () {
+        return this;
+    };
+    return InfiniteIterator;
+}());
+exports.InfiniteIterator = InfiniteIterator;
+
+},{"./random":3}]},{},[2])
+
 //# sourceMappingURL=lorem.js.map
