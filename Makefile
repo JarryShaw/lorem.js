@@ -2,6 +2,8 @@ init: install
 
 install: npm-install typings-install
 compile: gulp tsc
+test:
+	npm test
 
 gulp: gulp-compile
 tsc: tsc-compile
@@ -16,4 +18,5 @@ gulp-compile:
 	npx gulp
 
 tsc-compile:
-	npx tsc --outDir js
+	npx tsc
+	mv ts/*.js ts/*.js.map js

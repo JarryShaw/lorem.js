@@ -16,10 +16,20 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Launch Program",
+            "name": "Launch Program (JavaScript)",
             "program": "${workspaceFolder}/js/lorem.min.js",
             "outFiles": [
                 "${workspaceFolder}/**/*.js"
+            ]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Program (TypeScript)",
+            "program": "${workspaceFolder}/ts/lorem.ts",
+            "preLaunchTask": "tsc: build - tsconfig.json",
+            "outFiles": [
+                "${workspaceFolder}/js/*.js"
             ]
         }
     ]
