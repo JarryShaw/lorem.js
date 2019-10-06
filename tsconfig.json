@@ -1,17 +1,23 @@
 {
-    "files": [
-      "ts/lorem.ts"
+  "files": [
+    "ts/lorem.ts",
+    "ts/types.ts",
+    "ts/random.ts"
+  ],
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "lib": [
+      "es5",
+      "es2015.iterable"
     ],
-    "compilerOptions": {
-        "target": "es5",
-        "module": "commonjs",
-        "moduleResolution": "node",
-        "sourceMap": true,
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        "removeComments": true,
-        "noImplicitAny": true
-    }
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "removeComments": true,
+    "noImplicitAny": true
+  }
 }
 
 // {

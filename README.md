@@ -1,2 +1,1 @@
-# lorem.js
- JavaScript lorem ipsum generator
+# lorem.js -- JavaScript lorem ipsum generator

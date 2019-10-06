@@ -31,5 +31,5 @@ function compile() {
         .pipe(gulp.dest(path.join('js')));
 }
 
-gulp.task('ts', compile);
+gulp.task('tsc', compile);
 gulp.task('default', compile);
