@@ -1,0 +1,7 @@
+{
+  "name": "lorem",
+  "dependencies": {},
+  "globalDependencies": {
+  },
+  "resolution": "ts/typings"
+}
