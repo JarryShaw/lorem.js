@@ -1,4 +1,9 @@
-/// <reference path="../ts/lorem.d.ts" />
+/// <reference path="./typings/index.d.ts" />
+
+///////////////////////////////////////////////////////////////////////////////
+// random.ts
+///////////////////////////////////////////////////////////////////////////////
+
 /**
  * Lorem ipsum generator.
  *
@@ -116,28 +121,95 @@
  *
  * @module lorem
  */
-'use strict';
-var __spreadArrays = (this && this.__spreadArrays) || function () {
-    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
-    for (var r = Array(s), k = 0, i = 0; i < il; i++)
-        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
-            r[k] = a[j];
-    return r;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var os_1 = require("os");
-var random = require("./random");
-var types_1 = require("./types");
+
+///////////////////////////////////////////////////////////////////////////////
+// random.ts
+///////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Choose a random element from a non-empty sequence.
+ *
+ * @template T
+ * @param {T[]} seq
+ * @returns {T}
+ */
+declare function choice<T>(seq: T[]): T;
+/**
+ * Shuffle list x in place, and return None.
+ *
+ * @template T
+ * @param {T[]} x
+ */
+declare function shuffle<T>(x: T[]): void;
+/**
+ * Return random integer in range [a, b], including both end points.
+ *
+ * @param {number} a
+ * @param {number} b
+ * @returns {number}
+ */
+declare function randint(a: number, b: number): number;
+
+///////////////////////////////////////////////////////////////////////////////
+// types.ts
+///////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Return a capitalized version of the string.
+ *
+ * More specifically, make the first character have upper case and the rest lower
+ * case.
+ *
+ * @param {string} s
+ * @returns {string}
+ */
+declare function capitalize(s: string): string;
+
+interface String {
+    /**
+     * Return a capitalized version of the string.
+     *
+     * More specifically, make the first character have upper case and the rest lower
+     * case.
+     *
+     * @returns {string}
+     * @memberof String
+     */
+    capitalize(): string;
+}
+
+/**
+ * Infinite iterator.
+ *
+ * @class InfiniteIterator
+ * @implements {Iterator<T>}
+ * @template T
+ */
+declare class InfiniteIterator<T> implements Iterator<T> {
+    /**
+     * Iterating items.
+     *
+     * @type {T[]}
+     * @memberof InfiniteIterator
+     */
+    items: T[];
+
+    constructor(items: T[]);
+    next(): IteratorResult<T>;
+    [Symbol.iterator](): Iterator<T>;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// lorem.ts
+///////////////////////////////////////////////////////////////////////////////
+
+type StringFunction = (s: string, ...args: any[]) => string;
+type StringIterator = InfiniteIterator<string>;
+type NumberTuple = [number, number];
+
 /** Original lorem ipsum text pool. */
-var _TEXT = [
-    'ad', 'adipiscing', 'aliqua', 'aliquip', 'amet', 'anim', 'aute', 'cillum', 'commodo',
-    'consectetur', 'consequat', 'culpa', 'cupidatat', 'deserunt', 'do', 'dolor', 'dolore',
-    'duis', 'ea', 'eiusmod', 'elit', 'enim', 'esse', 'est', 'et', 'eu', 'ex', 'excepteur',
-    'exercitation', 'fugiat', 'id', 'in', 'incididunt', 'ipsum', 'irure', 'labore', 'laboris',
-    'laborum', 'lorem', 'magna', 'minim', 'mollit', 'nisi', 'non', 'nostrud', 'nulla',
-    'occaecat', 'officia', 'pariatur', 'proident', 'qui', 'quis', 'reprehenderit', 'sed',
-    'sint', 'sit', 'sunt', 'tempor', 'ullamco', 'ut', 'velit', 'veniam', 'voluptate'
-];
+declare let _TEXT: string[];
+
 /**
  * Generate word pool.
  *
@@ -156,15 +228,7 @@ var _TEXT = [
  * @param {number} [dupe]
  * @returns {StringIterator}
  */
-function _gen_pool(dupe) {
-    if (dupe === void 0) { dupe = 1; }
-    var pool = [];
-    for (var i = 0; i < dupe; i++) {
-        pool.push.apply(pool, _TEXT);
-    }
-    random.shuffle(pool);
-    return new types_1.InfiniteIterator(pool);
-}
+declare function _gen_pool(dupe: number): StringIterator;
 /**
  * Generate random word.
  *
@@ -197,16 +261,11 @@ function _gen_pool(dupe) {
  * @param {any[]} [args]
  * @returns {string}
  */
-function _gen_word(pool, func, args) {
-    if (args === void 0) { args = []; }
-    var text = pool.next().value;
-    if (func !== undefined)
-        if (typeof func === "string")
-            text = text[func].apply(text, args);
-        else
-            text = func.apply(void 0, __spreadArrays([text], args));
-    return text;
-}
+declare function _gen_word<T extends string | StringFunction>(
+    pool: StringIterator,
+    func?: T extends string ? string : StringFunction,
+    args?: any[]
+): string;
 /**
  * Generate random sentence.
  *
@@ -239,23 +298,11 @@ function _gen_word(pool, func, args) {
  * @param {NumberTuple} word_range
  * @returns {string}
  */
-function _gen_sentence(pool, comma, word_range) {
-    var text = _gen_word(pool, 'capitalize');
-    for (var i = 0; i < random.randint.apply(random, word_range) - 1; i++)
-        text += ' ' + _gen_word(pool);
-    var include_comma;
-    for (var i = 0; i < random.randint.apply(random, comma); i++) {
-        include_comma = random.choice([true, false]);
-        if (include_comma) {
-            text += ',';
-            for (var i = 0; i < random.randint.apply(random, word_range) - 1; i++)
-                text += ' ' + _gen_word(pool);
-            continue;
-        }
-        break;
-    }
-    return text + '.';
-}
+declare function _gen_sentence(
+    pool: StringIterator,
+    comma: NumberTuple,
+    word_range: NumberTuple
+): string;
 /**
  * Generate random paragraph.
  *
@@ -297,29 +344,30 @@ function _gen_sentence(pool, comma, word_range) {
  * @param {NumberTuple} sentence_range
  * @returns {string}
  */
-function _gen_paragraph(pool, comma, word_range, sentence_range) {
-    var text = _gen_sentence(pool, comma, word_range);
-    for (var i = 0; i < random.randint.apply(random, sentence_range) - 1; i++)
-        text += ' ' + _gen_sentence(pool, comma, word_range);
-    return text;
-}
+declare function _gen_paragraph(
+    pool: StringIterator,
+    comma: NumberTuple,
+    word_range: NumberTuple,
+    sentence_range: NumberTuple
+): string;
+
 /**
  * Generate a list of random words.
  *
  * ```javascript
- * > word(3)
+ * > lorem.word(3)
  * InfiniteIterator {
  *   items: [ 'dolore', 'esse', 'duis' ],
  *   pointer: 0,
  *   length: 3
  * }
- * > word(3, 'capitalize')
+ * > lorem.word(3, 'capitalize')
  * InfiniteIterator {
  *   items: [ 'Ullamco', 'Adipiscing', 'Consectetur' ],
  *   pointer: 0,
  *   length: 3
  * }
- * > word(3, (s) => s.toUpperCase())
+ * > lorem.word(3, (s) => s.toUpperCase())
  * InfiniteIterator {
  *   items: [ 'QUIS', 'ALIQUA', 'CILLUM' ],
  *   pointer: 0,
@@ -364,16 +412,11 @@ function _gen_paragraph(pool, comma, word_range, sentence_range) {
  * @param {any[]} [args]
  * @returns {StringIterator}
  */
-function word(count, func, args) {
-    if (count === void 0) { count = 1; }
-    if (args === void 0) { args = []; }
-    var pool = _gen_pool(count);
-    var list = [];
-    for (var i = 0; i < count; i++)
-        list.push(_gen_word(pool, func, args));
-    return new types_1.InfiniteIterator(list);
-}
-exports.word = word;
+declare function word<T extends string | StringFunction>(
+    count?: number,
+    func?: T extends string ? string : StringFunction,
+    args?: any[]
+): StringIterator;
 /**
  * Generate a list of random sentences.
  *
@@ -417,17 +460,11 @@ exports.word = word;
  * @param {NumberTuple} [word_range]
  * @returns {StringIterator}
  */
-function sentence(count, comma, word_range) {
-    if (count === void 0) { count = 1; }
-    if (comma === void 0) { comma = [0, 2]; }
-    if (word_range === void 0) { word_range = [4, 8]; }
-    var pool = _gen_pool(count);
-    var list = [];
-    for (var i = 0; i < count; i++)
-        list.push(_gen_sentence(pool, comma, word_range));
-    return new types_1.InfiniteIterator(list);
-}
-exports.sentence = sentence;
+declare function sentence(
+    count?: number,
+    comma?: NumberTuple,
+    word_range?: NumberTuple
+): StringIterator;
 /**
  * Generate a list of random paragraphs.
  *
@@ -482,18 +519,13 @@ exports.sentence = sentence;
  * @param {NumberTuple} [sentence_range]
  * @returns {StringIterator}
  */
-function paragraph(count, comma, word_range, sentence_range) {
-    if (count === void 0) { count = 1; }
-    if (comma === void 0) { comma = [0, 2]; }
-    if (word_range === void 0) { word_range = [4, 8]; }
-    if (sentence_range === void 0) { sentence_range = [5, 10]; }
-    var pool = _gen_pool(count);
-    var list = [];
-    for (var i = 0; i < count; i++)
-        list.push(_gen_paragraph(pool, comma, word_range, sentence_range));
-    return new types_1.InfiniteIterator(list);
-}
-exports.paragraph = paragraph;
+declare function paragraph(
+    count?: number,
+    comma?: NumberTuple,
+    word_range?: NumberTuple,
+    sentence_range?: NumberTuple
+): StringIterator;
+
 /**
  * Return random words.
  *
@@ -547,19 +579,13 @@ exports.paragraph = paragraph;
  * @param {any[]} [args]
  * @returns {string}
  */
-function get_word(count, sep, func, args) {
-    if (count === void 0) { count = 1; }
-    if (sep === void 0) { sep = ' '; }
-    if (args === void 0) { args = []; }
-    if (typeof count === "object")
-        count = random.randint.apply(random, count);
-    var iter_list = word(count, func, args);
-    var list = [];
-    for (var i = 0; i < count; i++)
-        list.push(iter_list.next().value);
-    return list.join(sep);
-}
-exports.get_word = get_word;
+declare function get_word<K extends number | NumberTuple,
+    T extends string | StringFunction>(
+        count?: K extends number ? number : NumberTuple,
+        sep?: string,
+        func?: T extends string ? string : StringFunction,
+        args?: any[]
+    ): string;
 /**
  * Return random sentences.
  *
@@ -610,20 +636,12 @@ exports.get_word = get_word;
  * @param {NumberTuple} [word_range]
  * @returns {string}
  */
-function get_sentence(count, sep, comma, word_range) {
-    if (count === void 0) { count = 1; }
-    if (sep === void 0) { sep = ' '; }
-    if (comma === void 0) { comma = [0, 2]; }
-    if (word_range === void 0) { word_range = [4, 8]; }
-    if (typeof count === "object")
-        count = random.randint.apply(random, count);
-    var iter_list = sentence(count, comma, word_range);
-    var list = [];
-    for (var i = 0; i < count; i++)
-        list.push(iter_list.next().value);
-    return list.join(sep);
-}
-exports.get_sentence = get_sentence;
+declare function get_sentence<K extends number | NumberTuple>(
+    count?: K extends number ? number : NumberTuple,
+    sep?: string,
+    comma?: NumberTuple,
+    word_range?: NumberTuple
+): string;
 /**
  * Return random paragraphs.
  *
@@ -683,21 +701,14 @@ exports.get_sentence = get_sentence;
  * @param {NumberTuple} [sentence_range]
  * @returns {string}
  */
-function get_paragraph(count, sep, comma, word_range, sentence_range) {
-    if (count === void 0) { count = 1; }
-    if (sep === void 0) { sep = os_1.EOL; }
-    if (comma === void 0) { comma = [0, 2]; }
-    if (word_range === void 0) { word_range = [4, 8]; }
-    if (sentence_range === void 0) { sentence_range = [5, 10]; }
-    if (typeof count === "object")
-        count = random.randint.apply(random, count);
-    var iter_list = paragraph(count, comma, word_range, sentence_range);
-    var list = [];
-    for (var i = 0; i < count; i++)
-        list.push(iter_list.next().value);
-    return list.join(sep);
-}
-exports.get_paragraph = get_paragraph;
+declare function get_paragraph<K extends number | NumberTuple>(
+    count?: K extends number ? number : NumberTuple,
+    sep?: string,
+    comma?: NumberTuple,
+    word_range?: NumberTuple,
+    sentence_range?: NumberTuple
+): string;
+
 /**
  * Customise random word pool.
  *
@@ -709,8 +720,4 @@ exports.get_paragraph = get_paragraph;
  *
  * @param {string[]} pool
  */
-function set_pool(pool) {
-    _TEXT = pool;
-}
-exports.set_pool = set_pool;
-//# sourceMappingURL=lorem.js.map
+declare function set_pool(pool: string[]): void;

@@ -1,6 +1,6 @@
 {
   "name": "lorem",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "JavaScript lorem ipsum generator",
   "main": "js/lorem.min.js",
   "scripts": {
@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/JarryShaw/lorem.js#readme",
   "devDependencies": {
+    "@types/node": "^12.7.11",
     "browserify": "^16.5.0",
     "gulp": "^4.0.2",
     "gulp-sourcemaps": "^2.6.5",
