@@ -4,6 +4,7 @@ ts/*.js.map
 
 test/*.js
 test/*.js.map
+test/spec
 
 # Created by https://www.gitignore.io/api/macos,windows,linux,typings,node,visualstudiocode
 # Edit at https://www.gitignore.io/?templates=macos,windows,linux,typings,node,visualstudiocode
