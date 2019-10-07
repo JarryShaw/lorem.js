@@ -75,14 +75,17 @@ The `lorem` module provides two different ways for getting random words.
 
 <a name="word"></a>
 
-1. `word` -- generate a list of random words
-
-   ```javascript
-   function word<T extends string | StringFunction>(
+1. ```typescript
+   function word<T extends string | (s: string, ...args: any[]) => string>(
        count?: number | undefined,
-       func?: (T extends string ? string : StringFunction) | undefined,
+       func?: (T extends string ? string : (s: string, ...args: any[]) => string) | undefined,
        args?: any[] | undefined
-   ): InfiniteIterator<string>
+   ): InfiniteIterator<string>;
+   function word<T extends string | StringFunction>({ count, func, args }: {
+       count?: number | undefined;
+       func?: (T extends string ? string : StringFunction) | undefined;
+       args?: any[] | undefined;
+   }): InfiniteIterator<string>;
    ```
 
    Generate a list of random words.
@@ -137,20 +140,24 @@ The `lorem` module provides two different ways for getting random words.
 
    - Returns:
 
-     * `StringIterator` -- indefinite random words generator
+     * `InfiniteIterator<string>` -- indefinite random words generator
 
 <a name="get_word"></a>
 
-2. `get_word` -- return random words
-
-   ```javascript
+2. ```typescript
    function get_word<K extends number | [number, number],
-                     T extends string | StringFunction>(
+                     T extends string | (s: string, ...args: any[]) => string>(
        count?: (K extends number ? number : [number, number]) | undefined,
        sep?: string | undefined,
-       func?: (T extends string ? string : StringFunction) | undefined,
+       func?: (T extends string ? string : (s: string, ...args: any[]) => string) | undefined,
        args?: any[] | undefined
-   ): string
+   ): string;
+   function get_word<K extends number | [number, number], T extends string | StringFunction>({ count, sep, func, args }: {
+       count?: (K extends number ? number : [number, number]) | undefined;
+       sep?: string | undefined;
+       func?: (T extends string ? string : StringFunction) | undefined;
+       args?: any[] | undefined;
+   }): string;
    ```
 
    Return random words.
@@ -180,7 +187,7 @@ The `lorem` module provides two different ways for getting random words.
 
        *default*: `' '`
 
-     * `func` -- `string | StringFunction`
+     * `func` -- `string | (s: string, ...args: any[]) => string`
 
        Filter function. It can be a function name of `string`, or a customised
        function that takes the original `string` and returns the modified `string`.
@@ -204,14 +211,17 @@ The `lorem` module provides two different ways for getting random sentences.
 
 <a name="sentence"></a>
 
-1. `sentence` -- generate a list of random sentences
-
-   ```javascript
+1. ```typescript
    function sentence(
        count?: number | undefined,
        comma?: [number, number] | undefined,
        word_range?: [number, number] | undefined
-   ): InfiniteIterator<string>
+   ): InfiniteIterator<string>;
+   function sentence({ count, comma, word_range }: {
+       count?: number | undefined;
+       comma?: [number, number] | undefined;
+       word_range?: [number, number] | undefined;
+   }): InfiniteIterator<string>;
    ```
 
    Generate a list of random sentences.
@@ -249,19 +259,23 @@ The `lorem` module provides two different ways for getting random sentences.
 
    - Returns:
 
-     * `StringIterator` -- indefinite random sentence generator
+     * `InfiniteIterator<string>` -- indefinite random sentence generator
 
 <a name="get_sentence"></a>
 
-2. `get_sentence` -- return random sentences
-
-   ```javascript
+2. ```typescript
    function get_sentence<K extends number | [number, number]>(
        count?: (K extends number ? number : [number, number]) | undefined,
        sep?: string | undefined,
        comma?: [number, number] | undefined,
        word_range?: [number, number] | undefined
-   ): string
+   ): string;
+   function get_sentence<K extends number | [number, number]>({ count, sep, comma, word_range }: {
+       count?: (K extends number ? number : [number, number]) | undefined;
+       sep?: string | undefined;
+       comma?: [number, number] | undefined;
+       word_range?: [...] | undefined;
+   }): string;
    ```
 
    Return random sentences.
@@ -313,15 +327,19 @@ The `lorem` module provides two different ways for getting random paragraphs.
 
 <a name="paragraph"></a>
 
-1. `paragraph` -- generate a list of random paragraphs
-
-   ```javascript
+1. ```typescript
    function paragraph(
        count?: number | undefined,
        comma?: [number, number] | undefined,
        word_range?: [number, number] | undefined,
        sentence_range?: [number, number] | undefined
-   ): InfiniteIterator<string>
+   ): InfiniteIterator<string>;
+   function paragraph({ count, comma, word_range, sentence_range }: {
+       count?: number | undefined;
+       comma?: [number, number] | undefined;
+       word_range?: [number, number] | undefined;
+       sentence_range?: [number, number] | undefined;
+   }): InfiniteIterator<string>;
    ```
 
    Generate a list of random paragraphs.
@@ -369,20 +387,25 @@ The `lorem` module provides two different ways for getting random paragraphs.
 
    - Returns:
 
-     * `StringIterator` -- random paragraph generator
+     * `InfiniteIterator<string>` -- random paragraph generator
 
 <a name="get_paragraph"></a>
 
-2. `get_paragraph` -- return random paragraphs
-
-   ```javascript
+2. ```typescript
    function get_paragraph<K extends number | [number, number]>(
        count?: (K extends number ? number : [number, number]) | undefined,
        sep?: string | undefined,
        comma?: [number, number] | undefined,
        word_range?: [number, number] | undefined,
        sentence_range?: [...] | undefined
-   ): string
+   ): string;
+   function get_paragraph<K extends number | [number, number]>({ count, sep, comma, word_range, sentence_range }: {
+       count?: (K extends number ? number : [number, number]) | undefined;
+       sep?: string | undefined;
+       comma?: [number, number] | undefined;
+       word_range?: [...] | undefined;
+       sentence_range?: [...] | undefined;
+   }): string;
    ```
 
    Return random paragraphs.
@@ -443,9 +466,7 @@ pool as you wish.
 
 <a name="set_pool"></a>
 
-1. `set_pool` -- customise random word pool
-
-   ```javascript
+1. ```javascript
    function set_pool(pool: string[]): void
    ```
 
@@ -463,22 +484,22 @@ Following are internal APIs for the `lorem` module.
 
 <a name="_text"></a>
 
-1. ```javascript
+1. ```typescript
    _TEXT: string[] = ['ad', 'adipiscing', 'aliqua', 'aliquip', 'amet', 'anim', 'aute', 'cillum', 'commodo',
                       'consectetur', 'consequat', 'culpa', 'cupidatat', 'deserunt',  'do', 'dolor', 'dolore',
                       'duis', 'ea', 'eiusmod', 'elit', 'enim', 'esse', 'est', 'et',  'eu', 'ex', 'excepteur',
                       'exercitation', 'fugiat', 'id', 'in', 'incididunt', 'ipsum',  'irure', 'labore', 'laboris',
                       'laborum', 'lorem', 'magna', 'minim', 'mollit', 'nisi', 'non',  'nostrud', 'nulla',
                       'occaecat', 'officia', 'pariatur', 'proident', 'qui', 'quis',  'reprehenderit', 'sed',
-                      'sint', 'sit', 'sunt', 'tempor', 'ullamco', 'ut', 'velit',  'veniam', 'voluptate']
+                      'sint', 'sit', 'sunt', 'tempor', 'ullamco', 'ut', 'velit',  'veniam', 'voluptate'];
    ```
 
    Original *lorem ipsum* text pool.
 
 <a name="_gen_pool"></a>
 
-2. ```javascript
-   function _gen_pool(dupe?: number): InfiniteIterator<string>
+2. ```typescript
+   function _gen_pool(dupe?: number): InfiniteIterator<string>;
    ```
 
    Generate word pool.
@@ -493,30 +514,37 @@ Following are internal APIs for the `lorem` module.
 
    - Returns
 
-     * `StringIterator` -- an infinite loop word pool
+     * `InfiniteIterator<string>` -- an infinite loop word pool
 
 <a name="_gen_word"></a>
 
-3. ```javascript
-   function _gen_word(
+3. ```typescript
+   function _gen_word<T extends string | StringFunction>(
        pool: InfiniteIterator<string>,
-       func?: string | StringFunction | undefined,
+       func?: (T extends string ? string : (s: string, ...args: any[]) => string) | undefined,
        args?: any[]
-   ): string
+   ): string;
+   function _gen_word<T extends string | StringFunction>({ pool, func, args }: {
+       pool: InfiniteIterator<string>,
+       func?: (T extends string ? string : (s: string, ...args: any[]) => string | undefined,
+       args?: any[] | undefined
+   }): string;
    ```
 
    Generate random word.
 
    - Args:
 
-     * `pool` -- `StringIterator`
+     * `pool` -- `InfiniteIterator<string>`
 
        Word pool, returned by `_gen_pool`.
 
-     * `func` -- `string | StringFunction`
+     * `func` -- `string | (s: string, ...args: any[]) => string`
 
        Filter function. It can be an attribute name of `string`, or a customised
        function that takes the original `string` and returns the modified `string`.
+
+       *default*: `undefined`
 
      * `args` -- `any[]`
 
@@ -530,19 +558,24 @@ Following are internal APIs for the `lorem` module.
 
 <a name="_gen_sentence"></a>
 
-4. ```javascript
+4. ```typescript
    function _gen_sentence(
        pool: InfiniteIterator<string>,
        comma: [number, number],
        word_range: [number, number]
-   ): string
+   ): string;
+   function _gen_sentence({ pool, comma, word_range }: {
+       pool: InfiniteIterator<string>;
+       comma: [number, number];
+       word_range: [number, number];
+   }): string;
    ```
 
    Generate random sentence.
 
    - Args:
 
-     * `pool` -- `StringIterator`
+     * `pool` -- `InfiniteIterator<string>`
 
        Word pool, returned by `_gen_pool`.
 
@@ -566,20 +599,26 @@ Following are internal APIs for the `lorem` module.
 
 <a name="_gen_paragraph"></a>
 
-5. ```javascript
+5. ```typescript
    function _gen_paragraph(
        pool: InfiniteIterator<string>,
        comma: [number, number],
        word_range: [number, number],
        sentence_range: [number, number]
-   ): string
+   ): string;
+   function _gen_paragraph({ pool, comma, word_range, sentence_range }: {
+       pool: InfiniteIterator<string>;
+       comma: [number, number];
+       word_range: [number, number];
+       sentence_range: [number, number];
+   }): string;
    ```
 
    Generate random paragraph.
 
    - Args:
 
-     * `pool` -- `StringIterator`
+     * `pool` -- `InfiniteIterator<string>`
 
        Word pool, returned by `_gen_pool`.
 
@@ -608,6 +647,14 @@ Following are internal APIs for the `lorem` module.
    - Returns:
 
      * `str` -- random paragraph
+
+<a name="InfiniteIterator"></a>
+
+6. ```typescript
+   class InfiniteIterator<T>
+   ```
+
+   Infinite iterator.
 
 ## Testing
 

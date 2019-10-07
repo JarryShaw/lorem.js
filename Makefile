@@ -3,9 +3,10 @@
 init: install
 
 install: npm-install typings-install
-compile: gulp
+compile: gulp tsc
 test:
 	npm test
+	open coverage/lcov-report/index.html
 
 gulp: gulp-default
 tsc: tsc-compile
@@ -26,4 +27,6 @@ gulp-compile:
 	npx gulp compile
 
 tsc-compile:
-	npx tsc
+	npx tsc -p .
+	mkdir -p js
+	mv ts/*.js ts/*.js.map js

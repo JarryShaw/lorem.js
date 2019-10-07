@@ -38,14 +38,27 @@ interface String {
  */
 declare class InfiniteIterator<T> implements Iterator<T> {
     /**
-     * Iterating items.
+     * Creates an instance of `InfiniteIterator`.
      *
-     * @type {T[]}
+     * @param {T[]} elements -- elements to iterate
+     * @param {boolean} [shuffle] -- shuffle after each turn
      * @memberof InfiniteIterator
      */
-    items: T[];
+    constructor(elements: T[], shuffle?: boolean);
 
-    constructor(items: T[]);
+    /**
+     * Interator protocol `next`.
+     *
+     * @returns {IteratorResult<T>}
+     * @memberof InfiniteIterator
+     */
     next(): IteratorResult<T>;
+
+    /**
+     * Iterator protocol registration.
+     *
+     * @returns {Iterator<T>}
+     * @memberof InfiniteIterator
+     */
     [Symbol.iterator](): Iterator<T>;
 }

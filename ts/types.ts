@@ -33,7 +33,7 @@ function capitalize(s: string): string {
  * @returns {string}
  * @memberof String
  */
-String.prototype.capitalize = function () {
+String.prototype.capitalize = function (): string {
     return capitalize(this.toString());
 };
 
@@ -45,31 +45,77 @@ String.prototype.capitalize = function () {
  * @template T
  */
 export class InfiniteIterator<T> implements Iterator<T> {
+    /**
+     * Elements to iterate.
+     *
+     * @private
+     * @type {T[]}
+     * @memberof InfiniteIterator
+     */
+    private _elements: T[];
+    /**
+     * Shuffle after each turn.
+     *
+     * @private
+     * @type {boolean}
+     * @memberof InfiniteIterator
+     */
+    private _shuffle: boolean;
+
+    /**
+     * Length of elements.
+     *
+     * @private
+     * @type {number}
+     * @memberof InfiniteIterator
+     */
+    private _length: number;
+    /**
+     * Iterating index pointer.
+     *
+     * @private
+     * @memberof InfiniteIterator
+     */
     private pointer = 0;
-    private length: number;
 
     /**
      * Creates an instance of `InfiniteIterator`.
      *
-     * @param {T[]} items
+     * @param {T[]} elements -- elements to iterate
+     * @param {boolean} [shuffle] -- shuffle after each turn
      * @memberof InfiniteIterator
      */
-    constructor(public items: T[]) {
-        this.length = items.length;
+    constructor(elements: T[], shuffle: boolean = false) {
+        this._length = elements.length;
+        this._elements = elements;
+        this._shuffle = shuffle;
     }
 
+    /**
+     * Interator protocol `next`.
+     *
+     * @returns {IteratorResult<T>}
+     * @memberof InfiniteIterator
+     */
     public next(): IteratorResult<T> {
-        if (this.pointer >= this.length) {
+        if (this.pointer >= this._length) {
             this.pointer = 0;
-            random.shuffle(this.items);
+            if (this._shuffle)
+                random.shuffle(this._elements);
         }
 
         return {
             done: false,
-            value: this.items[this.pointer++]
+            value: this._elements[this.pointer++]
         };
     }
 
+    /**
+     * Iterator protocol registration.
+     *
+     * @returns {Iterator<T>}
+     * @memberof InfiniteIterator
+     */
     [Symbol.iterator](): Iterator<T> {
         return this;
     }

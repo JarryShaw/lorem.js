@@ -27,7 +27,7 @@ gulp.task('compile', function compile() {
         .pipe(buffer())
         .pipe(sourcemaps.init({ loadMaps: true }))
         .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest(path.join('js')));
+        .pipe(gulp.dest(path.join('dist')));
 });
 
 gulp.task('minify', function compile() {
@@ -45,7 +45,7 @@ gulp.task('minify', function compile() {
         .pipe(sourcemaps.init({ loadMaps: true }))
         .pipe(uglify())
         .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest(path.join('js')));
+        .pipe(gulp.dest(path.join('dist')));
 });
 
 gulp.task('default', gulp.parallel(['compile', 'minify']));

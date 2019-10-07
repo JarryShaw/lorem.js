@@ -2,6 +2,7 @@
     "cSpell.words": [
         "ESNEXT",
         "Interop",
+        "Serializers",
         "adipiscing",
         "amet",
         "aute",
@@ -19,6 +20,7 @@
         "kwargs",
         "laboris",
         "laborum",
+        "lcov",
         "loremjs",
         "nostrud",
         "nulla",
@@ -34,8 +36,10 @@
         "tsify",
         "tslib",
         "ullamco",
+        "unmocked",
         "velit",
         "veniam",
         "voluptate"
-    ]
+    ],
+    "typescript.tsdk": "node_modules/typescript/lib"
 }

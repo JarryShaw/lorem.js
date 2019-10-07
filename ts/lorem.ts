@@ -29,24 +29,35 @@
  *
  * 1. `word` -- generate a list of random words
  *
- *    ```javascript
+ *    ```typescript
  *    function word<T extends string | StringFunction>(
  *        count?: number | undefined,
  *        func?: (T extends string ? string : StringFunction) | undefined,
  *        args?: any[] | undefined
- *    ): InfiniteIterator<string>
+ *    ): InfiniteIterator<string>;
+ *    function word<T extends string | StringFunction>({ count, func, args }: {
+ *        count?: number | undefined;
+ *        func?: (T extends string ? string : StringFunction) | undefined;
+ *        args?: any[] | undefined;
+ *    }): InfiniteIterator<string>;
  *    ```
  *
  * 2. `get_word` -- return random words
  *
- *    ```javascript
- *    function get_word<K extends number | [number, number],
+ *    ```typescript
+ *    function get_word<K extends number | NumberTuple,
  *                      T extends string | StringFunction>(
- *        count?: (K extends number ? number : [number, number]) | undefined,
+ *        count?: (K extends number ? number : NumberTuple) | undefined,
  *        sep?: string | undefined,
  *        func?: (T extends string ? string : StringFunction) | undefined,
  *        args?: any[] | undefined
- *    ): string
+ *    ): string;
+ *    function get_word<K extends number | [number, number], T extends string | StringFunction>({ count, sep, func, args }: {
+ *        count?: (K extends number ? number : [number, number]) | undefined;
+ *        sep?: string | undefined;
+ *        func?: (T extends string ? string : StringFunction) | undefined;
+ *        args?: any[] | undefined;
+ *    }): string;
  *    ```
  *
  * Get Random Sentences
@@ -56,23 +67,34 @@
  *
  * 1. `sentence` -- generate a list of random sentences
  *
- *    ```javascript
+ *    ```typescript
  *    function sentence(
  *        count?: number | undefined,
- *        comma?: [number, number] | undefined,
- *        word_range?: [number, number] | undefined
- *    ): InfiniteIterator<string>
+ *        comma?: NumberTuple | undefined,
+ *        word_range?: NumberTuple | undefined
+ *    ): InfiniteIterator<string>;
+ *    function sentence({ count, comma, word_range }: {
+ *        count?: number | undefined;
+ *        comma?: [number, number] | undefined;
+ *        word_range?: [number, number] | undefined;
+ *    }): InfiniteIterator<string>
  *    ```
  *
  * 2. `get_sentence` -- return random sentences
  *
- *    ```javascript
- *    function get_sentence<K extends number | [number, number]>(
- *        count?: (K extends number ? number : [number, number]) | undefined,
+ *    ```typescript
+ *    function get_sentence<K extends number | NumberTuple>(
+ *        count?: (K extends number ? number : NumberTuple) | undefined,
  *        sep?: string | undefined,
- *        comma?: [number, number] | undefined,
- *        word_range?: [number, number] | undefined
- *    ): string
+ *        comma?: NumberTuple | undefined,
+ *        word_range?: NumberTuple | undefined
+ *    ): string;
+ *    function get_sentence<K extends number | [number, number]>({ count, sep, comma, word_range }: {
+ *        count?: (K extends number ? number : [number, number]) | undefined;
+ *        sep?: string | undefined;
+ *        comma?: [number, number] | undefined;
+ *        word_range?: [...] | undefined;
+ *    }): string;
  *    ```
  *
  * Get Random Paragraphs
@@ -82,25 +104,38 @@
  *
  * 1. `paragraph` -- generate a list of random paragraphs
  *
- *    ```javascript
+ *    ```typescript
  *    function paragraph(
  *        count?: number | undefined,
- *        comma?: [number, number] | undefined,
- *        word_range?: [number, number] | undefined,
- *        sentence_range?: [number, number] | undefined
- *    ): InfiniteIterator<string>
+ *        comma?: NumberTuple | undefined,
+ *        word_range?: NumberTuple | undefined,
+ *        sentence_range?: NumberTuple | undefined
+ *    ): InfiniteIterator<string>;
+ *    function paragraph({ count, comma, word_range, sentence_range }: {
+ *        count?: number | undefined;
+ *        comma?: [number, number] | undefined;
+ *        word_range?: [number, number] | undefined;
+ *        sentence_range?: [number, number] | undefined;
+ *    }): InfiniteIterator<string>;
  *    ```
  *
  * 2. `get_paragraph` -- return random paragraphs
  *
- *    ```javascript
- *    function get_paragraph<K extends number | [number, number]>(
- *        count?: (K extends number ? number : [number, number]) | undefined,
+ *    ```typescript
+ *    function get_paragraph<K extends number | NumberTuple>(
+ *        count?: (K extends number ? number : NumberTuple) | undefined,
  *        sep?: string | undefined,
- *        comma?: [number, number] | undefined,
- *        word_range?: [number, number] | undefined,
+ *        comma?: NumberTuple | undefined,
+ *        word_range?: NumberTuple | undefined,
  *        sentence_range?: [...] | undefined
- *    ): string
+ *    ): string;
+ *    function get_paragraph<K extends number | [number, number]>({ count, sep, comma, word_range, sentence_range }: {
+ *        count?: (K extends number ? number : [number, number]) | undefined;
+ *        sep?: string | undefined;
+ *        comma?: [number, number] | undefined;
+ *        word_range?: [...] | undefined;
+ *        sentence_range?: [...] | undefined;
+ *    }): string;
  *    ```
  *
  * Customise Word Pool
@@ -150,7 +185,7 @@ let _TEXT: string[] = [
  *
  *   * `StringIterator` -- an infinite loop word pool
  *
- * @param {number} [dupe]
+ * @param {number} [dupe=1]
  * @returns {StringIterator}
  */
 function _gen_pool(dupe: number = 1): StringIterator {
@@ -161,7 +196,7 @@ function _gen_pool(dupe: number = 1): StringIterator {
     }
     random.shuffle(pool);
 
-    return new InfiniteIterator(pool);
+    return new InfiniteIterator(pool, true);
 }
 
 /**
@@ -173,7 +208,7 @@ function _gen_pool(dupe: number = 1): StringIterator {
  *
  *     Word pool, returned by `_gen_pool`.
  *
- *   * `func` -- `T extends string ? string : StringFunction`
+ *   * `func` -- `string | StringFunction`
  *
  *     Filter function. It can be an attribute name of `String`, or a customised
  *     function that takes the original `String` and returns the modified `String`.
@@ -191,16 +226,23 @@ function _gen_pool(dupe: number = 1): StringIterator {
  *   * `string` -- random word
  *
  * @template T
- * @param {StringIterator} pool
- * @param {T extends string ? string : StringFunction} [func]
+ * @param {StringIterator | Args_gen_word} pool
+ * @param {string | StringFunction} [func]
  * @param {any[]} [args]
  * @returns {string}
  */
 function _gen_word(
-    pool: StringIterator,
+    func_args: StringIterator | Args_gen_word,
     func?: string | StringFunction,
     args: any[] = []
 ): string {
+    if ('pool' in func_args) {
+        var pool = func_args.pool;
+        var func = func_args.func;
+        var args = func_args.args === undefined ? [] : func_args.args;
+    } else
+        var pool = func_args;
+
     var text = pool.next().value;
     if (func !== undefined)
         if (typeof func === "string")
@@ -219,14 +261,14 @@ function _gen_word(
  *
  *     Word pool, returned by `_gen_pool`.
  *
- *   * `comma` -- `[number, number]`
+ *   * `comma` -- `NumberTuple`
  *
  *     Random range for number of commas. The function will use
  *     `random.randint` to choose a random integer as the number of commas.
  *
  *     *default*: `[0, 2]`
  *
- *   * `word_range` -- `[number, number]`
+ *   * `word_range` -- `NumberTuple`
  *
  *     Random range for number of words in each sentence. The function will
  *     use `random.randint` to choose a random integer as the number of words.
@@ -237,16 +279,23 @@ function _gen_word(
  *
  *   * `string` -- random sentence
  *
- * @param {StringIterator} pool
+ * @param {StringIterator | Args_gen_sentence} pool
  * @param {NumberTuple} comma
  * @param {NumberTuple} word_range
  * @returns {string}
  */
 function _gen_sentence(
-    pool: StringIterator,
-    comma: [number, number],
-    word_range: [number, number]
+    func_args: StringIterator | Args_gen_sentence,
+    comma: NumberTuple,
+    word_range: NumberTuple
 ): string {
+    if ('pool' in func_args) {
+        var pool = func_args.pool;
+        var comma = func_args.comma;
+        var word_range = func_args.word_range;
+    } else
+        var pool = func_args;
+
     var text = _gen_word(pool, 'capitalize');
     for (var i = 0; i < random.randint(...word_range) - 1; i++)
         text += ' ' + _gen_word(pool);
@@ -274,21 +323,21 @@ function _gen_sentence(
  *
  *     Word pool, returned by `_gen_pool`.
  *
- *   * `comma` -- `[number, number]`
+ *   * `comma` -- `NumberTuple`
  *
  *     Random range for number of commas. The function will use
  *     `random.randint` to choose a random integer as the number of commas.
  *
  *     *default*: `[0, 2]`
  *
- *   * `word_range` -- `[number, number]`
+ *   * `word_range` -- `NumberTuple`
  *
  *     Random range for number of words in each sentence. The function will
  *     use `random.randint` to choose a random integer as the number of words.
  *
  *     *default*: `[4, 8]`
  *
- *   * `sentence_range` -- `[number, number]`
+ *   * `sentence_range` -- `NumberTuple`
  *
  *     Random range for number of sentences in each paragraph. The function
  *     will use `random.randint` to choose a random integer as the number of
@@ -300,18 +349,26 @@ function _gen_sentence(
  *
  *   * `str` -- random paragraph
  *
- * @param {StringIterator} pool
+ * @param {(StringIterator | Args_gen_paragraph)} func_args
  * @param {NumberTuple} comma
  * @param {NumberTuple} word_range
  * @param {NumberTuple} sentence_range
  * @returns {string}
  */
 function _gen_paragraph(
-    pool: StringIterator,
-    comma: [number, number],
-    word_range: [number, number],
-    sentence_range: [number, number]
+    func_args: StringIterator | Args_gen_paragraph,
+    comma: NumberTuple,
+    word_range: NumberTuple,
+    sentence_range: NumberTuple
 ): string {
+    if ('pool' in func_args) {
+        var pool = func_args.pool;
+        var comma = func_args.comma;
+        var word_range = func_args.word_range;
+        var sentence_range = func_args.sentence_range;
+    } else
+        var pool = func_args;
+
     var text = _gen_sentence(pool, comma, word_range);
     for (var i = 0; i < random.randint(...sentence_range) - 1; i++)
         text += ' ' + _gen_sentence(pool, comma, word_range);
@@ -350,40 +407,42 @@ function _gen_paragraph(
  *
  *     *default*: `1`
  *
- *   * `func` -- `Optional[Union[str, Callable[[str], str]]]`
+ *   * `func` -- `string | StringFunction`
  *
- *     Filter function. It can be an attribute name of `str`, or a customised
- *     function that takes the original `str` and returns the modified `str`.
+ *     Filter function. It can be an attribute name of `string`, or a customised
+ *     function that takes the original `string` and returns the modified `string`.
  *
- *     *default*: `None`
+ *     *default*: `undefined`
  *
- *   * `args` -- `Tuple[str]`
+ *   * `args` -- `any[]`
  *
  *     Additional positional arguments for `func`.
  *
- *     *default*: `()`
- *
- *   * `kwargs` -- `Dict[str, Any]`
- *
- *     Additional keyword arguments for `func`.
- *
- *     *default*: `{}`
+ *     *default*: `[]`
  *
  * - Returns:
  *
  *   * `StringIterator` -- indefinite random words generator
  *
- * @template T
- * @param {number} [count]
- * @param {T extends string ? string : StringFunction} [func]
- * @param {any[]} [args]
+ * @export
+ * @param {(number | Args_word)} [func_args=1]
+ * @param {(string | StringFunction)} [func]
+ * @param {any[]} [args=[]]
  * @returns {StringIterator}
  */
 export function word(
-    count: number = 1,
+    func_args: number | Args_word = 1,
     func?: string | StringFunction,
     args: any[] = []
 ): StringIterator {
+    if (typeof func_args === 'number') {
+        var count = func_args;
+    } else {
+        var count = func_args.count;
+        var func = func_args.func;
+        var args = func_args.args === undefined ? [] : func_args.args;
+    }
+
     var pool = _gen_pool(count);
     var list: string[] = [];
 
@@ -412,14 +471,14 @@ export function word(
  *
  *     *default*: `1`
  *
- *   * `comma` -- `[number, number]`
+ *   * `comma` -- `NumberTuple`
  *
  *     Random range for number of commas. The function will use
  *     `random.randint` to choose a random integer as the number of commas.
  *
  *     *default*: `[0, 2]`
  *
- *   * `word_range` -- `[number, number]`
+ *   * `word_range` -- `NumberTuple`
  *
  *     Random range for number of words in each sentence. The function will
  *     use `random.randint` to choose a random integer as the number of words.
@@ -430,16 +489,25 @@ export function word(
  *
  *   * `StringIterator` -- indefinite random sentence generator
  *
- * @param {number} [count]
- * @param {NumberTuple} [comma]
- * @param {NumberTuple} [word_range]
+ * @export
+ * @param {(number | Args_sentence)} [func_args=1]
+ * @param {NumberTuple} [comma=[0, 2]]
+ * @param {NumberTuple} [word_range=[4, 8]]
  * @returns {StringIterator}
  */
 export function sentence(
-    count: number = 1,
-    comma: [number, number] = [0, 2],
-    word_range: [number, number] = [4, 8]
+    func_args: number | Args_sentence = 1,
+    comma: NumberTuple = [0, 2],
+    word_range: NumberTuple = [4, 8]
 ): StringIterator {
+    if (typeof func_args === 'number') {
+        var count = func_args;
+    } else {
+        var count = func_args.count;
+        var comma = func_args.comma === undefined ? [0, 2] as NumberTuple : func_args.comma;
+        var word_range = func_args.word_range === undefined ? [4, 8] as NumberTuple : func_args.word_range;
+    }
+
     var pool = _gen_pool(count);
     var list: string[] = [];
 
@@ -470,21 +538,21 @@ export function sentence(
  *
  *     *default*: `1`
  *
- *   * `comma` -- `[number, number]`
+ *   * `comma` -- `NumberTuple`
  *
  *     Random range for number of commas. The function will use
  *     `random.randint` to choose a random integer as the number of commas.
  *
  *     *default*: `[0, 2]`
  *
- *   * `word_range` -- `[number, number]`
+ *   * `word_range` -- `NumberTuple`
  *
  *     Random range for number of words in each sentence. The function will
  *     use `random.randint` to choose a random integer as the number of words.
  *
  *     *default*: `[4, 8]`
  *
- *   * `sentence_range` -- `[number, number]`
+ *   * `sentence_range` -- `NumberTuple`
  *
  *     Random range for number of sentences in each paragraph. The function
  *     will use `random.randint` to choose a random integer as the number of
@@ -496,18 +564,28 @@ export function sentence(
  *
  *   * `StringIterator` -- random paragraph generator
  *
- * @param {number} [count]
- * @param {NumberTuple} [comma]
- * @param {NumberTuple} [word_range]
- * @param {NumberTuple} [sentence_range]
+ * @export
+ * @param {(number | Args_paragraph)} [func_args=1]
+ * @param {NumberTuple} [comma=[0, 2]]
+ * @param {NumberTuple} [word_range=[4, 8]]
+ * @param {NumberTuple} [sentence_range=[5, 10]]
  * @returns {StringIterator}
  */
 export function paragraph(
-    count: number = 1,
-    comma: [number, number] = [0, 2],
-    word_range: [number, number] = [4, 8],
-    sentence_range: [number, number] = [5, 10]
+    func_args: number | Args_paragraph = 1,
+    comma: NumberTuple = [0, 2],
+    word_range: NumberTuple = [4, 8],
+    sentence_range: NumberTuple = [5, 10]
 ): StringIterator {
+    if (typeof func_args === 'number') {
+        var count = func_args;
+    } else {
+        var count = func_args.count;
+        var comma = func_args.comma === undefined ? [0, 2] as NumberTuple : func_args.comma;
+        var word_range = func_args.word_range === undefined ? [4, 8] as NumberTuple : func_args.word_range;
+        var sentence_range = func_args.sentence_range === undefined ? [4, 8] as NumberTuple : func_args.sentence_range;
+    }
+
     var pool = _gen_pool(count);
     var list: string[] = [];
 
@@ -530,7 +608,7 @@ export function paragraph(
  *
  * - Args:
  *
- *   * `count` -- `number | [number, number]`
+ *   * `count` -- `number | NumberTuple`
  *
  *     Number of random words. To generate random number of words, supply a
  *     2-element tuple of `number`, the function will use `random.randint` to choose
@@ -561,22 +639,28 @@ export function paragraph(
  *
  *   * `string` -- random words
  *
- * @template K
- * @template T
- * @param {K extends number ? number : NumberTuple} [count]
- * @param {string} [sep]
- * @param {T extends string ? string : StringFunction} [func]
- * @param {any[]} [args]
+ * @export
+ * @param {(number | NumberTuple | Args_get_word)} [func_args=1]
+ * @param {string} [sep=' ']
+ * @param {(string | StringFunction)} [func]
+ * @param {any[]} [args=[]]
  * @returns {string}
  */
 export function get_word(
-    count: number | [number, number] = 1,
+    func_args: number | NumberTuple | Args_get_word = 1,
     sep: string = ' ',
     func?: string | StringFunction,
     args: any[] = []
 ): string {
-    if (typeof count === "object")
-        count = random.randint(...count);
+    if (typeof func_args === 'number')
+        var count = func_args;
+    else if ('count' in func_args) {
+        var count = func_args.count === undefined ? 1 : func_args.count;
+        var sep = func_args.sep === undefined ? ' ' : func_args.sep;
+        var func = func_args.func;
+        var args = func_args.args === undefined ? [] : func_args.args;
+    } else
+        var count = random.randint(...func_args as NumberTuple);
     var iter_list = word(count, func, args);
 
     var list: string[] = [];
@@ -595,7 +679,7 @@ export function get_word(
  *
  * - Args:
  *
- *   * `count` -- `number | [number, number]`
+ *   * `count` -- `number | NumberTuple`
  *
  *     Number of random sentences. To generate random number of sentences,
  *     supply a 2-element tuple of `number`, the function will use
@@ -610,14 +694,14 @@ export function get_word(
  *
  *     *default*: `' '`
  *
- *   * `comma` -- `[number, number]`
+ *   * `comma` -- `NumberTuple`
  *
  *     Random range for number of commas. The function will use
  *     `random.randint` to choose a random integer as the number of commas.
  *
  *     *default*: `[0, 2]`
  *
- *   * `word_range` -- `[number, number]`
+ *   * `word_range` -- `NumberTuple`
  *
  *     Random range for number of words in each sentence. The function will
  *     use `random.randint` to choose a random integer as the number of words.
@@ -628,21 +712,28 @@ export function get_word(
  *
  *   * `string` -- random sentences
  *
- * @template K
- * @param {K extends number ? number : NumberTuple} [count]
- * @param {string} [sep]
- * @param {NumberTuple} [comma]
- * @param {NumberTuple} [word_range]
+ * @export
+ * @param {(number | NumberTuple | Args_get_sentence)} [func_args=1]
+ * @param {string} [sep=' ']
+ * @param {NumberTuple} [comma=[0, 2]]
+ * @param {NumberTuple} [word_range=[4, 8]]
  * @returns {string}
  */
 export function get_sentence(
-    count: number | NumberTuple = 1,
+    func_args: number | NumberTuple | Args_get_sentence = 1,
     sep: string = ' ',
     comma: NumberTuple = [0, 2],
     word_range: NumberTuple = [4, 8]
 ): string {
-    if (typeof count === "object")
-        count = random.randint(...count);
+    if (typeof func_args === 'number')
+        var count = func_args;
+    else if ('count' in func_args) {
+        var count = func_args.count === undefined ? 1 : func_args.count;
+        var sep = func_args.sep === undefined ? ' ' : func_args.sep;
+        var comma = func_args.comma === undefined ? [0, 2] as NumberTuple : func_args.comma;
+        var word_range = func_args.word_range === undefined ? [4, 8] as NumberTuple : func_args.word_range;
+    } else
+        var count = random.randint(...func_args as NumberTuple);
     var iter_list = sentence(count, comma, word_range);
 
     var list: string[] = [];
@@ -661,7 +752,7 @@ export function get_sentence(
  *
  * - Args:
  *
- *   * `count` -- `number | [number, number]`
+ *   * `count` -- `number | NumberTuple`
  *
  *     Number of random paragraphs. To generate random number of paragraphs,
  *     supply a 2-element tuple of `number`, the function will use
@@ -676,21 +767,21 @@ export function get_sentence(
  *
  *     *default*: `os.EOL` (`\r\n` on Windows, `\n` on POSIX)
  *
- *   * `comma` -- `[number, number]`
+ *   * `comma` -- `NumberTuple`
  *
  *     Random range for number of commas. The function will use
  *     `random.randint` to choose a random integer as the number of commas.
  *
  *     *default*: `[0, 2]`
  *
- *   * `word_range` -- `[number, number]`
+ *   * `word_range` -- `NumberTuple`
  *
  *     Random range for number of words in each sentence. The function will
  *     use `random.randint` to choose a random integer as the number of words.
  *
  *     *default*: `[4, 8]`
  *
- *   * `sentence_range` -- `[number, number]`
+ *   * `sentence_range` -- `NumberTuple`
  *
  *     Random range for number of sentences in each paragraph. The function
  *     will use `random.randint` to choose a random integer as the number of
@@ -702,23 +793,31 @@ export function get_sentence(
  *
  *   * `string` -- random paragraphs
  *
- * @template K
- * @param {K extends number ? number : NumberTuple} [count]
- * @param {string} [sep]
- * @param {NumberTuple} [comma]
- * @param {NumberTuple} [word_range]
- * @param {NumberTuple} [sentence_range]
+ * @export
+ * @param {(number | NumberTuple | Args_get_paragraph)} [func_args=1]
+ * @param {string} [sep=EOL]
+ * @param {NumberTuple} [comma=[0, 2]]
+ * @param {NumberTuple} [word_range=[4, 8]]
+ * @param {NumberTuple} [sentence_range=[5, 10]]
  * @returns {string}
  */
 export function get_paragraph(
-    count: number | NumberTuple = 1,
+    func_args: number | NumberTuple | Args_get_paragraph = 1,
     sep: string = EOL,
     comma: NumberTuple = [0, 2],
     word_range: NumberTuple = [4, 8],
     sentence_range: NumberTuple = [5, 10]
 ): string {
-    if (typeof count === "object")
-        count = random.randint(...count);
+    if (typeof func_args === 'number')
+        var count = func_args;
+    else if ('count' in func_args) {
+        var count = func_args.count === undefined ? 1 : func_args.count;
+        var sep = func_args.sep === undefined ? ' ' : func_args.sep;
+        var comma = func_args.comma === undefined ? [0, 2] as NumberTuple : func_args.comma;
+        var word_range = func_args.word_range === undefined ? [4, 8] as NumberTuple : func_args.word_range;
+        var sentence_range = func_args.sentence_range === undefined ? [5, 10] as NumberTuple : func_args.sentence_range;
+    } else
+        var count = random.randint(...func_args as NumberTuple);
     var iter_list = paragraph(count, comma, word_range, sentence_range);
 
     var list: string[] = [];
