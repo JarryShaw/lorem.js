@@ -1,4 +1,6 @@
 
+.venv
+
 ts/*.js
 ts/*.js.map
 

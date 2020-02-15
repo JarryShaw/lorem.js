@@ -1,0 +1,9 @@
+{
+    "source": {
+        "include": [
+            "ts"
+        ],
+        "includePattern": ".+\\.ts(.d)?$",
+        "excludePattern": "(^|\\/|\\\\)_"
+    }
+}
