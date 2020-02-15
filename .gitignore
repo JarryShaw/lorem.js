@@ -1,6 +1,9 @@
 
 .venv
 
+docs/build
+docs/typedoc
+
 ts/*.js
 ts/*.js.map
 

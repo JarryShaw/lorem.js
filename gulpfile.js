@@ -12,6 +12,20 @@ const tsify = require('tsify');
 const uglify = require('gulp-uglify');
 const sourcemaps = require('gulp-sourcemaps');
 const buffer = require('vinyl-buffer');
+// TypeDoc.js
+const typedoc = require("gulp-typedoc");
+
+gulp.task("typedoc", function () {
+    return gulp
+        .src(["ts/**/*.ts"])
+        .pipe(typedoc({
+            module: "commonjs",
+            target: "es5",
+            out: "docs/typedoc/",
+            name: "lorem.js"
+        }))
+        ;
+});
 
 gulp.task('compile', function compile() {
     return browserify({
