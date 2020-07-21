@@ -27,7 +27,7 @@
     "@types/node": "^12.7.11",
     "browserify": "^16.5.0",
     "chai": "^4.2.0",
-    "codecov": "^3.6.1",
+    "codecov": "^3.7.1",
     "gulp": "^4.0.2",
     "gulp-sourcemaps": "^2.6.5",
     "gulp-typedoc": "^2.2.4",
