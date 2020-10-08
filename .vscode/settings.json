@@ -45,5 +45,6 @@
         "veniam",
         "voluptate"
     ],
-    "typescript.tsdk": "node_modules/typescript/lib"
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "python.pythonPath": "/Users/jarryshaw/GitHub/lorem/lorem.js/.venv/bin/python3.8"
 }
