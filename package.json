@@ -1,6 +1,6 @@
 {
   "name": "lorem",
-  "version": "0.1.2.0",
+  "version": "0.1.2",
   "description": "JavaScript lorem ipsum generator",
   "main": "js/lorem.min.js",
   "scripts": {
