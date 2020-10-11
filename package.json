@@ -1,5 +1,5 @@
 {
-  "name": "lorem",
+  "name": "@jarryshaw/lorem",
   "version": "0.1.2",
   "description": "JavaScript lorem ipsum generator",
   "main": "js/lorem.min.js",
