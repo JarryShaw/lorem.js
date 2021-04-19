@@ -224,11 +224,11 @@
         },
         "sphinx-js": {
             "hashes": [
-                "sha256:29622572be6de0e83e5cf3d8069672ee78bd378e198e29be79627c09da6733e7",
-                "sha256:9f1b1a8151dbb8e0250bdff2560ed8d86a10fe5c29a6ffe0efe001b8835854a4"
+                "sha256:04fe0d2fec6d39b505d70500d0132cfa0efc834760c9598048c1a9dbbc175732",
+                "sha256:4503accb74ba3a15e0e59e20ec18b15be1932b2c8e8b82e03ace39a415899785"
             ],
             "index": "tuna",
-            "version": "==3.1.1"
+            "version": "==3.1.2"
         },
         "sphinxcontrib-applehelp": {
             "hashes": [
