@@ -218,11 +218,11 @@
         },
         "setuptools": {
             "hashes": [
-                "sha256:5ec2bbb534ed160b261acbbdd1b463eb3cf52a8d223d96a8ab9981f63798e85c",
-                "sha256:75fd345a47ce3d79595b27bf57e6f49c2ca7904f3c7ce75f8a87012046c86b0b"
+                "sha256:a4377723c53721515f72a3dfc1bfacdcd61edfa19a4cccf82e72e4f50d9cecbd",
+                "sha256:ad0ea3d172404abb14d8f7bd7f54f2ccd4ed9dd00c9da0b1398862e69eb22c03"
             ],
             "markers": "python_version >= '3.7'",
-            "version": "==60.0.0"
+            "version": "==60.1.0"
         },
         "six": {
             "hashes": [
