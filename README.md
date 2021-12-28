@@ -1,6 +1,6 @@
 # Lorem ipsum generator
 
-[![Travis CI - Status](https://travis-ci.com/JarryShaw/lorem.js.svg)](https://travis-ci.com/JarryShaw/lorem.js)
+<!-- [![Travis CI - Status](https://travis-ci.com/JarryShaw/lorem.js.svg)](https://travis-ci.com/JarryShaw/lorem.js) -->
 [![Codecov - Coverage](https://codecov.io/gh/JarryShaw/lorem.js/branch/master/graph/badge.svg)](https://codecov.io/gh/JarryShaw/lorem.js)
 [![License](https://img.shields.io/github/license/jarryshaw/lorem.js.svg)](https://opensource.org/licenses/BSD-3-Clause)
 [![LICENSE](https://img.shields.io/badge/license-Anti%20996-blue.svg)](https://github.com/996icu/996.ICU/blob/master/LICENSE)
