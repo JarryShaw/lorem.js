@@ -239,19 +239,19 @@
         },
         "rstcheck": {
             "hashes": [
-                "sha256:50969fa9b48238fe1245e62c33922222c7b4353671a50db6d5934752c6c37642",
-                "sha256:63f20c20058e8f0d4ece6215a0bcaf36157f9d4eb94119d62bd7b90a7f51166b"
+                "sha256:2f69b972c682fbb6618e969273962f77c4307d6900e013b4d74f674f13fc81cb",
+                "sha256:c5230cbb25d0db9c7d27a1a04e0dfe047220206f5e79e11f0110aa82f564399c"
             ],
             "index": "tuna",
-            "version": "==6.0.0rc3"
+            "version": "==6.0.0.post1"
         },
         "rstcheck-core": {
             "hashes": [
-                "sha256:4243e798f003b3db6627c42363af807e8b9b850612e5834f5c1ec100a68df240",
-                "sha256:58f9be9de2a97581fc464dcbf47849a0461ca0a3854b0493d340fd14cad1e351"
+                "sha256:6d75e858441644b9a0ad7a89a6c0a9012920be7dc4fad34f95579ae2a97a2d5e",
+                "sha256:b06bee11f3679b283cbd6abf707bfe4d5fd2cf480cfa3ffe6d5c9238c6d4ae89"
             ],
             "markers": "python_version >= '3.7' and python_version < '4.0'",
-            "version": "==1.0.0"
+            "version": "==1.0.2"
         },
         "shellingham": {
             "hashes": [
@@ -277,11 +277,11 @@
         },
         "sphinx": {
             "hashes": [
-                "sha256:464d9c1bd5613bcebe76b46658763f3f3dbb184da7406e632a84596d3cd8ee90",
-                "sha256:af248b21e3282f847ff20feebe7a1985fb34773cbe3fc75bf206897f1a2199c4"
+                "sha256:36aa2a3c2f6d5230be94585bc5d74badd5f9ed8f3388b8eedc1726fe45b1ad30",
+                "sha256:f4da1187785a5bc7312cc271b0e867a93946c319d106363e102936a3d9857306"
             ],
             "index": "tuna",
-            "version": "==5.0.0"
+            "version": "==5.0.1"
         },
         "sphinx-js": {
             "hashes": [
