@@ -68,10 +68,10 @@
         },
         "colorama": {
             "hashes": [
-                "sha256:854bf444933e37f5824ae7bfc1e98d5bce2ebe4160d46b5edf346a89358e99da",
-                "sha256:e6c6b4334fc50988a639d9b98aa429a0b57da6e17b9a44f0451f930b6967b7a4"
+                "sha256:96e0137fb3ab6b56576b4638116d77c59f3e0565f4ea081172e4721c722afa92",
+                "sha256:bc3a1efa0b297242dcd0757e2e83d358bcd18bda77735e493aa89a634e74c9bf"
             ],
-            "version": "==0.4.5"
+            "version": "==0.4.6rc1"
         },
         "commonmark": {
             "hashes": [
@@ -226,10 +226,10 @@
         },
         "pytz": {
             "hashes": [
-                "sha256:2c0784747071402c6e99f0bafdb7da0fa22645f06554c7ae06bf6358897e9c91",
-                "sha256:48ce799d83b6f8aab2020e369b627446696619e79645419610b9facd909b3174"
+                "sha256:335ab46900b1465e714b4fda4963d87363264eb662aab5e65da039c25f1f5b22",
+                "sha256:c4d88f472f54d615e9cd582a5004d1e5f624854a6a27a6211591c251f22a6914"
             ],
-            "version": "==2022.4"
+            "version": "==2022.5"
         },
         "requests": {
             "hashes": [
@@ -286,11 +286,11 @@
         },
         "sphinx": {
             "hashes": [
-                "sha256:55f485389bbde8962fdbb03cf6e39672852ea1992282faa5b46df99c8319656f",
-                "sha256:e6d970d3c0a07cb0e6aa86ee405dda0806f5c8f3b2546e5523d7a4f5e711b4b5"
+                "sha256:1efbeeb409a2c1a52a9d0eba2ad630cb7b386f0e9a19b45c61745d991f9fd740",
+                "sha256:5d0ace63928aa6a36584288fb2702df9182e17c33f21a74a7e008d70eefaf156"
             ],
             "index": "tuna",
-            "version": "==6.0.0b1"
+            "version": "==6.0.0b2"
         },
         "sphinx-js": {
             "hashes": [
