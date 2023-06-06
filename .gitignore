@@ -1,5 +1,6 @@
 
 .venv
+Pipfile.lock
 
 docs/build
 docs/typedoc
